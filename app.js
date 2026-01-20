@@ -3,12 +3,18 @@ const app  = express ()
 const mongoose = require('mongoose')
 require('dotenv').config()
 
+//TO GET DATA IN JSON FILE FORMAT
+app.use(express.json())
+
+//TO GET DATA IN FROM FORMAT
 app.use(express.urlencoded({extended: false}))
 
 
 app.get('/', (req, res)=>{
     res.send("This is homepage")
 })
+
+//
 
 mongoose.connect(
 process.env.DATABASE_URL    
