@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 require("dotenv").config();
 const userRoute = require('./routers/user_router.js')
+const taskRoute = require("./routers/task_router.js");
 
 //TO GET DATA IN JSON FILE FORMAT
 app.use(express.json());
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 //ROUTER FOR USER
 app.use('/user/api', userRoute)
 
+app.use('/tasks/api', taskRoute)
 
 app.get("/", (req, res) => {
   res.send("This is homepage");
