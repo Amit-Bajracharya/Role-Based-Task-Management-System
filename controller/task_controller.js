@@ -44,7 +44,7 @@ const getTask = async(req, res)=>{
 const getTaskById = async(req, res)=>{
   try{
     const {id} = req.params
-    const fetchTaskById = await task.findById(id)
+    const fetchTaskById = await task.findOne({_id: id, userId: req.user.userId})
     if(!fetchTaskById){
         return res.status(400).json({sucess: false, data: `Unable to find the task with id  ${id}`})
     }
