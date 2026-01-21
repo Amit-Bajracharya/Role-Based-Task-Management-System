@@ -1,8 +1,14 @@
 const express = require('express')
 
-const {deleteUser, addUser, updateUser, getUserById, getAllUser} = require('../controller/user_controller.js')
+const {deleteUser, addUser, updateUser, getUserById, getAllUser, loginUser, refreshToken} = require('../controller/user_controller.js')
 
 const userRoute = express.Router()
+
+//LOGIN USER
+userRoute.post('/login',loginUser )
+
+//REFRESH TOKEN
+userRoute.post('/refresh', refreshToken )
 
 //ADD NEW USER
 userRoute.post("/", addUser );
