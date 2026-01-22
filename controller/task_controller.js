@@ -4,11 +4,11 @@ const addTask =async (req, res)=>{
   const addedTask = await task.create({...req.body, userId: req.user.userId})
   try {
     if(!addedTask){
-      return res.status(400).json({sucess: false, data: "Unable to add task"})
+      return res.status(400).json({success: false, data: "Unable to add task"})
     }
-    return res.status(201).json({sucess: true, data: addedTask})
+    return res.status(201).json({success: true, data: addedTask})
   } catch (error) {
-    res.status(400).json({sucess: false, data: error.message})
+    res.status(400).json({success: false, data: error.message})
   }
 }
 
@@ -16,16 +16,16 @@ const updateTask = async(req, res)=>{
  try {
    const {id} = req.params;
    if(!id){
-     return res.status(400).json({sucess: false, data: "Unable to find the required id"})
+     return res.status(400).json({success: false, data: "Unable to find the required id"})
    }
    const updateTask = await task.findOneAndUpdate({userId: req.user.userId, _id: id}, req.body)
    if(!updateTask){
-     return res.status(400).json({sucess: false, data: "Unable to update the task"})
+     return res.status(400).json({success: false, data: "Unable to update the task"})
    }
    const updatedTask = await task.findById(id)
-   return res.status(201).json({sucess: true, data: updatedTask})
+   return res.status(201).json({success: true, data: updatedTask})
  } catch (error) {
-    res.status(400).json({sucess: false, data: error.message})
+    res.status(400).json({success: false, data: error.message})
  }
 }
 
@@ -33,11 +33,11 @@ const getTask = async(req, res)=>{
   const fetchTask = await task.find({userId: req.user.userId})
   try {
     if(!fetchTask){
-       return res.status(400).json({sucess: false, data: "Unable to find task"})
+       return res.status(400).json({success: false, data: "Unable to find task"})
     }
-    return res.status(201).json({sucess: true, data: fetchTask})
+    return res.status(201).json({success: true, data: fetchTask})
   } catch (error) {
-     res.status(400).json({sucess: false, data: error.message})
+     res.status(400).json({success: false, data: error.message})
   }
 }
 
@@ -46,11 +46,11 @@ const getTaskById = async(req, res)=>{
     const {id} = req.params
     const fetchTaskById = await task.findOne({_id: id, userId: req.user.userId})
     if(!fetchTaskById){
-        return res.status(400).json({sucess: false, data: `Unable to find the task with id  ${id}`})
+        return res.status(400).json({success: false, data: `Unable to find the task with id  ${id}`})
     }
-    return res.status(201).json({sucess: true, data: fetchTaskById})
+    return res.status(201).json({success: true, data: fetchTaskById})
   }catch(error){
-    res.status(400).json({sucess: false, data: error.message})
+    res.status(400).json({success: false, data: error.message})
   }
 }
 
@@ -59,11 +59,11 @@ try{
   const {id} = req.params
   const deleteTask = await task.findOneAndDelete({userId: req.user.userId, _id: id})
   if(!deleteTask){
-    return res.status(400).json({sucess: false, data: "Unable to delete the task"})
+    return res.status(400).json({success: false, data: "Unable to delete the task"})
   }
-  return res.status(201).json({sucess: true, data: "successfully Deleted The Task"})
+  return res.status(201).json({success: true, data: "successfully Deleted The Task"})
 }catch(error){
-  res.status(400).json({sucess: false, data: error.message})
+  res.status(400).json({success: false, data: error.message})
 }
 }
 
