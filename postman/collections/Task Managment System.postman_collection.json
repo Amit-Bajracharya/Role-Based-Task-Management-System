@@ -1,0 +1,306 @@
+{
+  "info": {
+    "_postman_id": "acda8a2f-7c2e-4178-a8f5-84de8e9a769e",
+    "name": "Task Managment System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User_handler",
+      "item": [
+        {
+          "name": "Add User",
+          "id": "e9661e65-4c8c-4e0f-88ca-6e038a0f078d",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n     \"username\" :\"auth eg\",\r\n     \"email\":\"auth@gmail.com\",\r\n     \"password\":\"pass123\",\r\n     \"role\":\"user\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:5000/user/api",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "user",
+                "api"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All User",
+          "id": "922f07a4-f577-4a01-9c0a-ba7ebd2dd65a",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n     \"name\" :\"amit\"\r\n}"
+            },
+            "url": {
+              "raw": "localhost:5000/user/api",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "user",
+                "api"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "id": "0833a28c-7349-4145-8a67-7c5e07b75b89",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n     \"username\" :\"amit123\",\r\n     \"password\" : \"123456\",\r\n     \"email\":\"newemail12@gmail.com\",\r\n     \"role\":\"admin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:5000/user/api/696f410a6234aa3708767d3d",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "user",
+                "api",
+                "696f410a6234aa3708767d3d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User By Id",
+          "id": "23199c6b-b4a0-4e70-8289-817113ac6ce5",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n     \"username\" :\"amit123\",\r\n     \"password\" : \"123456\",\r\n     \"email\":\"newemail12@gmail.com\",\r\n     \"role\":\"admin\"\r\n}"
+            },
+            "url": {
+              "raw": "localhost:5000/user/api/696f4b603f20d8046912cb7e",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "user",
+                "api",
+                "696f4b603f20d8046912cb7e"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User By Id",
+          "id": "10224167-2755-4534-a10e-b8443481b25c",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n     \"username\" :\"amit123\",\r\n     \"password\" : \"123456\",\r\n     \"email\":\"newemail12@gmail.com\",\r\n     \"role\":\"admin\"\r\n}"
+            },
+            "url": {
+              "raw": "localhost:5000/user/api/696f4b603f20d8046912cb7e",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "user",
+                "api",
+                "696f4b603f20d8046912cb7e"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "f74e1120-8673-41a7-a484-ca04a3a91260"
+    },
+    {
+      "name": "Task_Handler",
+      "item": [
+        {
+          "name": "Get Task",
+          "id": "c141388b-5fe3-4f7d-8b42-abfcecd5a90a",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Add Task",
+          "id": "227ed713-2fed-41be-a23f-7ae85d7aa9ae",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n     \"title\" :\"Wash Dishes\",\r\n     \"description\":\"Wash Dish in kitchen\",\r\n     \"status\":\"pending\",\r\n     \"priority\":\"medium\",\r\n     \"dueDate\": \"2026-01-31T09:00:00.000Z\",\r\n     \"user\": \"696f86aef2e397bc127ec185\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:5000/tasks/api/",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "tasks",
+                "api",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Task",
+          "id": "792eacc3-508d-4bdc-bdff-3efae524a954",
+          "request": {
+            "method": "PUT",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Task",
+          "id": "e589ce15-cc38-45ee-aa7a-f4aa24fe460c",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTcwZTQ0YzU1Y2Y0NjIyZGMxMDZkYjAiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc2OTAwNjE4MCwiZXhwIjoxNzY5MDA3MDgwfQ.rWRKCC8R60eLM7zsdVMytaoXs2WKtyj9sBwa5H6MNoU",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:5000/tasks/api/696f8709f2e397bc127ec189",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "tasks",
+                "api",
+                "696f8709f2e397bc127ec189"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Task By Id",
+          "id": "d8bbc771-a46f-4459-845f-cf9b76f4d42d",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTcwZTQ0YzU1Y2Y0NjIyZGMxMDZkYjAiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc2OTAwNjE4MCwiZXhwIjoxNzY5MDA3MDgwfQ.rWRKCC8R60eLM7zsdVMytaoXs2WKtyj9sBwa5H6MNoU",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:5000/tasks/api/696f872adb7ad7ec5231daab",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "tasks",
+                "api",
+                "696f872adb7ad7ec5231daab"
+              ],
+              "query": [
+                {
+                  "key": "A",
+                  "value": null,
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "498354c2-4e7e-4039-b123-b7abaf1d7267"
+    },
+    {
+      "name": "Authentication Handler",
+      "item": [
+        {
+          "name": "User Login",
+          "id": "57753209-cf4d-490e-bcc7-de553f3c37fc",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"auth@gmail.com\",\r\n    \"password\": \"pass123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/user/api/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "user",
+                "api",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "e5cda740-be0b-4abb-8455-f39240b4a409"
+    }
+  ]
+}
