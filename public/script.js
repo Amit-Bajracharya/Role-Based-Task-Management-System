@@ -118,19 +118,26 @@ async function handleLogin(e) {
     showLoading(true);
 
     try {
-        // Simulate API call (replace with actual API call)
-        const response = await simulateLogin(email, password);
+        const response = await fetch('http://localhost:5000/user/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
         
-        if (response.success) {
-            currentUser = response.data.user;
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('refreshToken', response.data.refreshToken);
+        const data = await response.json();
+        
+        if (data.success) {
+            currentUser = data.data.user;
+            localStorage.setItem('token', data.data.token);
+            localStorage.setItem('refreshToken', data.data.refreshToken);
             
             showToast('Login successful!', 'success');
             showSection('dashboard');
             updateNavigation();
         } else {
-            showToast(response.data, 'error');
+            showToast(typeof data.data === 'string' ? data.data : 'Login failed', 'error');
         }
     } catch (error) {
         showToast('Login failed. Please try again.', 'error');
@@ -150,15 +157,22 @@ async function handleRegister(e) {
     showLoading(true);
 
     try {
-        // Simulate API call (replace with actual API call)
-        const response = await simulateRegister(username, email, password, role);
+        const response = await fetch('http://localhost:5000/user/api/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, email, password, role })
+        });
         
-        if (response.success) {
+        const data = await response.json();
+        
+        if (data.success) {
             showToast('Registration successful! Please login.', 'success');
             registerForm.reset();
             showSection('login');
         } else {
-            showToast(response.data, 'error');
+            showToast(typeof data.data === 'string' ? data.data : 'Registration failed', 'error');
         }
     } catch (error) {
         showToast('Registration failed. Please try again.', 'error');
@@ -235,22 +249,39 @@ async function handleTaskSubmit(e) {
     showLoading(true);
 
     try {
+        const token = localStorage.getItem('token');
         let response;
         
         if (currentEditTaskId) {
             // Update task
-            response = await simulateUpdateTask(currentEditTaskId, taskData);
+            response = await fetch(`http://localhost:5000/tasks/api/${currentEditTaskId}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(taskData)
+            });
         } else {
             // Create task
-            response = await simulateCreateTask(taskData);
+            response = await fetch('http://localhost:5000/tasks/api', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(taskData)
+            });
         }
         
-        if (response.success) {
+        const data = await response.json();
+        
+        if (data.success) {
             showToast(currentEditTaskId ? 'Task updated successfully!' : 'Task created successfully!', 'success');
             closeTaskModal();
             loadTasks();
         } else {
-            showToast(response.data, 'error');
+            showToast(typeof data.data === 'string' ? data.data : 'Task operation failed', 'error');
         }
     } catch (error) {
         showToast('Task operation failed. Please try again.', 'error');
@@ -263,15 +294,23 @@ async function loadTasks() {
     showLoading(true);
 
     try {
-        // Simulate API call (replace with actual API call)
-        const response = await simulateGetTasks();
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:5000/tasks/api', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
         
-        if (response.success) {
-            tasks = response.data;
+        const data = await response.json();
+        
+        if (data.success) {
+            tasks = data.data;
             renderTasks();
             updateTaskStats();
         } else {
-            showToast('Failed to load tasks', 'error');
+            showToast(typeof data.data === 'string' ? data.data : 'Failed to load tasks', 'error');
         }
     } catch (error) {
         showToast('Failed to load tasks', 'error');
@@ -354,14 +393,22 @@ async function deleteTask(taskId) {
     showLoading(true);
 
     try {
-        // Simulate API call (replace with actual API call)
-        const response = await simulateDeleteTask(taskId);
+        const token = localStorage.getItem('token');
+        const response = await fetch(`http://localhost:5000/tasks/api/${taskId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
         
-        if (response.success) {
+        const data = await response.json();
+        
+        if (data.success) {
             showToast('Task deleted successfully!', 'success');
             loadTasks();
         } else {
-            showToast(response.data, 'error');
+            showToast(typeof data.data === 'string' ? data.data : 'Failed to delete task', 'error');
         }
     } catch (error) {
         showToast('Failed to delete task', 'error');
@@ -413,112 +460,58 @@ function formatDate(dateString) {
     });
 }
 
-// Simulated API Functions (Replace with actual API calls)
-async function simulateLogin(email, password) {
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+// Token Refresh Function
+async function refreshToken() {
+    const refreshToken = localStorage.getItem('refreshToken');
     
-    // Mock successful login
-    return {
-        success: true,
-        data: {
-            user: {
-                _id: '1',
-                username: 'testuser',
-                email: email,
-                role: 'user'
+    try {
+        const response = await fetch('http://localhost:5000/user/api/refresh', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            token: 'mock_access_token',
-            refreshToken: 'mock_refresh_token'
+            body: JSON.stringify({ refreshToken })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            localStorage.setItem('token', data.data.token);
+            return data.data.token;
         }
-    };
-}
-
-async function simulateRegister(username, email, password, role) {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    return {
-        success: true,
-        data: 'User registered successfully'
-    };
-}
-
-async function simulateGetTasks() {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    // Mock tasks data
-    return {
-        success: true,
-        data: [
-            {
-                _id: '1',
-                title: 'Complete Project Documentation',
-                description: 'Write comprehensive documentation for the task management system',
-                status: 'in-progress',
-                priority: 'high',
-                dueDate: '2024-01-25',
-                userId: '1'
-            },
-            {
-                _id: '2',
-                title: 'Review Code Changes',
-                description: 'Review and merge pending pull requests',
-                status: 'pending',
-                priority: 'medium',
-                dueDate: '2024-01-23',
-                userId: '1'
-            },
-            {
-                _id: '3',
-                title: 'Setup Testing Environment',
-                description: 'Configure automated testing pipeline',
-                status: 'completed',
-                priority: 'low',
-                dueDate: '2024-01-20',
-                userId: '1'
-            }
-        ]
-    };
-}
-
-async function simulateCreateTask(taskData) {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    const newTask = {
-        _id: Date.now().toString(),
-        ...taskData,
-        userId: '1'
-    };
-    
-    tasks.push(newTask);
-    
-    return {
-        success: true,
-        data: newTask
-    };
-}
-
-async function simulateUpdateTask(taskId, taskData) {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    const taskIndex = tasks.findIndex(t => t._id === taskId);
-    if (taskIndex !== -1) {
-        tasks[taskIndex] = { ...tasks[taskIndex], ...taskData };
+    } catch (error) {
+        console.error('Token refresh failed:', error);
+        logout();
     }
     
-    return {
-        success: true,
-        data: tasks[taskIndex]
-    };
+    return null;
 }
 
-async function simulateDeleteTask(taskId) {
-    await new Promise(resolve => setTimeout(resolve, 500));
+// API Helper with Auto-Refresh
+async function makeApiCall(url, options) {
+    let token = localStorage.getItem('token');
     
-    tasks = tasks.filter(t => t._id !== taskId);
+    let response = await fetch(url, {
+        ...options,
+        headers: {
+            ...options.headers,
+            'Authorization': `Bearer ${token}`
+        }
+    });
     
-    return {
-        success: true,
-        data: 'Task deleted successfully'
-    };
+    if (response.status === 401) {
+        // Token expired, try to refresh
+        const newToken = await refreshToken();
+        if (newToken) {
+            response = await fetch(url, {
+                ...options,
+                headers: {
+                    ...options.headers,
+                    'Authorization': `Bearer ${newToken}`
+                }
+            });
+        }
+    }
+    
+    return response;
 }

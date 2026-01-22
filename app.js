@@ -5,6 +5,10 @@ require("dotenv").config();
 const userRoute = require('./routers/user_router.js')
 const taskRoute = require("./routers/task_router.js");
 const auth = require('./middleware/auth.js')
+const cors = require('cors')
+
+// Enable CORS
+app.use(cors())
 
 app.use(express.static('public'))
 

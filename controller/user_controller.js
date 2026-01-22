@@ -57,11 +57,11 @@ const getAllUser = async (req, res)=>{
     if (getUser.length === 0) {
       return res
         .status(400)
-        .json({ succes: false, data: "Unable To get User " });
+        .json({ success: false, data: "Unable To get User " });
     }
-    return res.status(201).json({ succes: true, data: getUser });
+    return res.status(201).json({ success: true, data: getUser });
   } catch (error) {
-    res.status(400).json({ succes: false, data: error.message });
+    res.status(400).json({ success: false, data: error.message });
   }
 }
 
@@ -71,17 +71,17 @@ const getUserById = async(req, res) => {
     if (!id) {
       return res
         .status(400)
-        .json({ succes: false, data: "Unable to find id " });
+        .json({ success: false, data: "Unable to find id " });
     }
     const fetchedData = await User.findById(id)
     if(!fetchedData){
          return res
         .status(400)
-        .json({ succes: false, data: "Unable to find Data " });
+        .json({ success: false, data: "Unable to find Data " });
     }
-    return res.status(201).json({succes: true, data: fetchedData});
+    return res.status(201).json({success: true, data: fetchedData});
   } catch (error) {
-    res.status(400).json({ succes: false, data: error.message });
+    res.status(400).json({ success: false, data: error.message });
   }
 }
 
@@ -99,11 +99,11 @@ const addUser = async (req, res) => {
     if (!adduser) {
       return res
         .status(400)
-        .json({ succes: false, data: "Unable To add User " });
+        .json({ success: false, data: "Unable To add User " });
     }
-    return res.status(201).json({ succes: true, data: adduser });
+    return res.status(201).json({ success: true, data: adduser });
   } catch (error) {
-    res.status(400).json({ succes: false, data: error.message });
+    res.status(400).json({ success: false, data: error.message });
   }
 }
 
@@ -114,7 +114,7 @@ const updateUser =  async (req, res) => {
     if (!id) {
       return res
         .status(400)
-        .json({ succes: false, data: "Unable to find id " });
+        .json({ success: false, data: "Unable to find id " });
     }
     if(req.body.password){
       req.body.password = await bcrypt.hash(req.body.password, 10)
@@ -124,13 +124,13 @@ const updateUser =  async (req, res) => {
     if (!userData) {
       return res
         .status(400)
-        .json({ succes: false, data: "Unable to Update the id " });
+        .json({ success: false, data: "Unable to Update the id " });
     }
 
     const updatedUser = await User.findById(id);
-    return res.status(201).json({ succes: true, data: updatedUser });
+    return res.status(201).json({ success: true, data: updatedUser });
   } catch (error) {
-    res.status(400).json({ succes: false, data: error.message });
+    res.status(400).json({ success: false, data: error.message });
   }
 }
 
@@ -140,16 +140,16 @@ const deleteUser = async (req, res)=>{
     if(!id){
         return res
         .status(400)
-        .json({ succes: false, data: "Unable to find id " });
+        .json({ success: false, data: "Unable to find id " });
     }
 
     const deleteUser = await User.findByIdAndDelete(id)
     if(!deleteUser){
-        return res.status(400).json({succes: false, data: "Unable to Delete User"})
+        return res.status(400).json({success: false, data: "Unable to Delete User"})
     }
-    return res.status(201).json({succes: true, data: "User Deleted succesy"})
+    return res.status(201).json({success: true, data: "User Deleted successfully"})
  }catch(error){
-     res.status(400).json({ succes: false, data: error.message });
+     res.status(400).json({ success: false, data: error.message });
  }
 }
 
